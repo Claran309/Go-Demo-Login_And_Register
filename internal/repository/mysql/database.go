@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	"GoGin/internal/config"
 	"errors"
 	"time"
 
@@ -8,8 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitMysql() (*gorm.DB, error) {
-	dsn := "claran:chr070309@tcp(localhost:3306)/Demo_logging_and_registering?charset=utf8mb4&parseTime=True&loc=Local"
+func InitMysql(config *config.Config) (*gorm.DB, error) {
+	dsn := config.DSN
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

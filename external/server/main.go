@@ -2,6 +2,7 @@ package main
 
 import (
 	"GoGin/internal/api/handlers"
+	"GoGin/internal/config"
 	"GoGin/internal/middleware"
 	"GoGin/internal/repository/mysql"
 	"GoGin/internal/services"
@@ -12,16 +13,17 @@ import (
 )
 
 func main() {
+	cfg := config.LoadConfig()
 	// 初始化依赖
 	// 数据层依赖
 	// userRepo := memory.NewMemoryUserRepository() 内存记忆储存信息
-	db, err := mysql.InitMysql()
+	db, err := mysql.InitMysql(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
 	userRepo := mysql.NewMysqlUserRepo(db)
 	// JWT工具
-	jwtUtil := jwt_util.NewJWTUtil()
+	jwtUtil := jwt_util.NewJWTUtil(cfg)
 	// 业务逻辑层依赖
 	userService := services.NewUserService(userRepo, jwtUtil)
 	// 处理器层依赖

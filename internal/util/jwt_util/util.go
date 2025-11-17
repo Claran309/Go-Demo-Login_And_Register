@@ -1,6 +1,7 @@
 package jwt_util
 
 import (
+	"GoGin/internal/config"
 	"GoGin/internal/model"
 	"time"
 
@@ -11,9 +12,13 @@ type defaultJWTUtil struct {
 	config model.Config
 }
 
-func NewJWTUtil() Util {
+func NewJWTUtil(config *config.Config) Util {
 	return &defaultJWTUtil{
-		config: model.DefaultJWTConfig,
+		config: model.Config{
+			Issuer:         config.JWTIssuer,
+			SecretKey:      config.JWTSecret,
+			ExpirationTime: time.Duration(config.JWTExpireHours) * time.Hour,
+		},
 	}
 }
 
