@@ -1,7 +1,7 @@
 package services
 
 import (
-	"GoGin/api/repository"
+	"GoGin/api/dao"
 	"GoGin/internal/model"
 	"GoGin/internal/util/jwt_util"
 	"errors"
@@ -9,11 +9,11 @@ import (
 )
 
 type UserService struct {
-	UserRepo repository.UserRepository
+	UserRepo dao.UserRepository
 	jwtUtil  jwt_util.Util
 }
 
-func NewUserService(userRepo repository.UserRepository, jwtUtil jwt_util.Util) *UserService {
+func NewUserService(userRepo dao.UserRepository, jwtUtil jwt_util.Util) *UserService {
 	return &UserService{
 		UserRepo: userRepo,
 		jwtUtil:  jwtUtil,

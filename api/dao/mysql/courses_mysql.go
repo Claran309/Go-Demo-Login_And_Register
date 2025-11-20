@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"GoGin/api/repository"
+	"GoGin/api/dao"
 	"GoGin/internal/model"
 	"errors"
 	"log"
@@ -13,7 +13,7 @@ type mysqlCourseRepo struct {
 	db *gorm.DB
 }
 
-func NewMysqlCourseRepo(db *gorm.DB) repository.CourseRepository {
+func NewMysqlCourseRepo(db *gorm.DB) dao.CourseRepository {
 	err := db.AutoMigrate(&model.Student{}, &model.Course{})
 	if err != nil {
 		log.Fatal("Failed to migrate student & course table:", err)

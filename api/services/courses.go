@@ -1,15 +1,15 @@
 package services
 
 import (
-	"GoGin/api/repository"
+	"GoGin/api/dao"
 	"GoGin/internal/model"
 )
 
 type CourseService struct {
-	CourseRepo repository.CourseRepository
+	CourseRepo dao.CourseRepository
 }
 
-func NewCourseService(courseRepo repository.CourseRepository) *CourseService {
+func NewCourseService(courseRepo dao.CourseRepository) *CourseService {
 	return &CourseService{CourseRepo: courseRepo}
 }
 

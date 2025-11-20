@@ -1,7 +1,7 @@
 package mysql
 
 import (
-	"GoGin/api/repository"
+	"GoGin/api/dao"
 	"GoGin/internal/model"
 	"errors"
 	"log"
@@ -13,7 +13,7 @@ type mysqlUserRepo struct {
 	db *gorm.DB
 }
 
-func NewMysqlUserRepo(db *gorm.DB) repository.UserRepository {
+func NewMysqlUserRepo(db *gorm.DB) dao.UserRepository {
 	err := db.AutoMigrate(&model.User{})
 	if err != nil {
 		log.Fatal("Failed to migrate user table:", err)

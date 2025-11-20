@@ -1,8 +1,8 @@
 package main
 
 import (
+	"GoGin/api/dao/mysql"
 	handlers2 "GoGin/api/handlers"
-	"GoGin/api/repository/mysql"
 	"GoGin/api/services"
 	"GoGin/internal/config"
 	"GoGin/internal/middleware"

@@ -5,7 +5,7 @@ package memory
 //
 //import (
 //	"GoGin/internal/model"
-//	"GoGin/internal/repository"
+//	"GoGin/internal/dao"
 //	"errors"
 //	"sync"
 //)
@@ -16,7 +16,7 @@ package memory
 //	DataSync    sync.Mutex             // 并发安全
 //}
 //
-//func NewMemoryUserRepository() repository.UserRepository {
+//func NewMemoryUserRepository() dao.UserRepository {
 //	return &memoryUserRepository{
 //		database:    make(map[string]*model.User),
 //		emailToData: make(map[string]string),
