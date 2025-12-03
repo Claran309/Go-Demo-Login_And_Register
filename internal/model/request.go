@@ -34,3 +34,19 @@ type AddCourseRequest struct {
 	Name    string `json:"name" binding:"required"`
 	Capital int    `json:"capital" binding:"required"`
 }
+
+// CreateTodoRequest "/to-do/create"
+type CreateTodoRequest struct {
+	Title       string `json:"title" binding:"required"`
+	Description string `json:"description" binding:"required"`
+}
+
+// FinishTodoRequest "/to-do/finish"
+type FinishTodoRequest struct {
+	TodoID int `json:"todo_id" binding:"required"`
+}
+
+// DeleteTodoRequest "/to-do/delete"
+type DeleteTodoRequest struct {
+	TodoID int `json:"todo_id" binding:"required"`
+}

@@ -23,14 +23,17 @@ func main() {
 	}
 	userRepo := mysql.NewMysqlUserRepo(db)
 	courseRepo := mysql.NewMysqlCourseRepo(db)
+	todoRepo := mysql.NewMysqlTodoRepo(db)
 	// JWT工具
 	jwtUtil := jwt_util.NewJWTUtil(cfg)
 	// 业务逻辑层依赖
 	userService := services.NewUserService(userRepo, jwtUtil)
 	courseService := services.NewCourseService(courseRepo)
+	todoService := services.NewTodoService(todoRepo)
 	// 处理器层依赖
 	userHandler := handlers2.NewUserHandler(userService)
 	courseHandler := handlers2.NewCourseHandler(courseService)
+	todoHandler := handlers2.NewTodoHandler(todoService)
 	//创建中间件
 	jwtMiddleware := middleware.NewJWTMiddleware(jwtUtil)
 
@@ -56,6 +59,18 @@ func main() {
 	course.POST("/drop", courseHandler.DropCourse)
 	//新增课程 (admin)
 	course.POST("/add/course", jwtMiddleware.JWTAuthentication(), jwtMiddleware.JWTAuthorization(), courseHandler.AddCourse)
+
+	//=====================to-do-list相关路由===================
+	todo := r.Group("/to-do")
+	todo.Use(jwtMiddleware.JWTAuthentication())
+	//新增to-do事项
+	todo.POST("/create", todoHandler.Create)
+	//完成to-do事项
+	todo.POST("/finish", todoHandler.Finish)
+	//删除to-do事项
+	todo.POST("/delete", todoHandler.Delete)
+	//获取to-do事项列表
+	todo.GET("/info", todoHandler.Info)
 
 	err = r.Run()
 	if err != nil {

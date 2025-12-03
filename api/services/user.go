@@ -3,6 +3,7 @@ package services
 import (
 	"GoGin/api/dao"
 	"GoGin/internal/model"
+	"GoGin/internal/util"
 	"GoGin/internal/util/jwt_util"
 	"errors"
 	"strings"
@@ -37,10 +38,16 @@ func (s *UserService) Register(req *model.RegisterRequest) (*model.User, error) 
 		return nil, errors.New("email format Error")
 	}
 
+	//加密密码
+	hashedPassword, err := util.HashPassword(req.Password)
+	if err != nil {
+		return nil, errors.New("password hash failed")
+	}
+
 	//创建用户
 	user := &model.User{
 		Username: req.Username,
-		Password: req.Password,
+		Password: hashedPassword, // 加密存储
 		Email:    req.Email,
 		Role:     req.Role,
 	}
@@ -85,7 +92,7 @@ func (s *UserService) Login(loginKey, password string) (string, *model.User, err
 	}
 
 	//检验密码正确性
-	if password != user.Password {
+	if !util.CheckPassword(user.Password, password) {
 		return "", nil, errors.New("password error"), ""
 	}
 
